@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1 {
+    color: red;
+    font-size: 30px;
+    font-style: italic;
+}
+h2 {
+    color: blue;
+    font-size: 24px;
+}
+.capital {
+    color: green;
+}
+nav {
+    background-color: rgb(1, 116, 52);
+    padding: 10px;
+}
+ul {
+    font-size: 20px;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;         
+    justify-content: center; 
+    gap: 15%;              
+}
+
+li {
+    padding: 5px;  
+}
+a {
+    display: inline-block; 
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+#titulo {
+    color: rgb(226, 142, 15);
+    text-align: center;
+    padding: 15%;
+}
+
+
+
