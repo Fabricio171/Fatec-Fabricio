@@ -1,11 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos - Solicitar Orçamento</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
+
+    <header>
+        <h1>Nosso Catálogo</h1>
+        <p>Selecione os produtos e solicite sua cotação personalizada.</p>
+    </header>
+
+    <main class="container">
+        <!-- Catálogo de Produtos -->
+        <section class="grid-produtos">
+            <div class="card-produto" data-id="1" data-nome="Compressor Industrial X100">
+                <img src="https://placeholder.com" alt="Produto">
+                <h3>Compressor Industrial X100</h3>
+                <p>Alta performance para linhas de montagem pesadas.</p>
+                <button class="btn-add">Adicionar ao Orçamento</button>
+            </div>
+
+            <div class="card-produto" data-id="2" data-nome="Painel de Controle Digital">
+                <img src="https://placeholder.com" alt="Produto">
+                <h3>Painel de Controle Digital</h3>
+                <p>Interface intuitiva com monitoramento em tempo real.</p>
+                <button class="btn-add">Adicionar ao Orçamento</button>
+            </div>
+        </section>
+
+        <!-- Lateral da Lista de Orçamento -->
+        <aside class="sidebar-orcamento">
+            <h2>Sua Lista</h2>
+            <ul id="lista-itens">
+                <!-- Itens aparecerão aqui via JS -->
+            </ul>
+            
+            <form id="form-orcamento">
+                <input type="text" id="nome" placeholder="Seu Nome" required>
+                <input type="email" id="email" placeholder="Seu E-mail" required>
+                <textarea id="mensagem" placeholder="Alguma observação específica?"></textarea>
+                <button type="submit" class="btn-enviar">Solicitar Orçamento Agora</button>
+            </form>
+        </aside>
+    </main>
+
+    <script>
+      const listaOrcamento = [];
+const listaUl = document.getElementById('lista-itens');
+const form = document.getElementById('form-orcamento');
+
+// Adiciona produto à lista
+document.querySelectorAll('.btn-add').forEach(botao => {
+    botao.addEventListener('click', () => {
+        const card = botao.parentElement;
+        const nomeProduto = card.getAttribute('data-nome');
+        
+        // Evita duplicados na lista visual (opcional)
+        if (!listaOrcamento.includes(nomeProduto)) {
+            listaOrcamento.push(nomeProduto);
+            atualizarListaUI();
+        } else {
+            alert('Este produto já está na sua lista!');
+        }
+    });
+});
+
+function atualizarListaUI() {
+    listaUl.innerHTML = '';
+    listaOrcamento.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${item} <button onclick="removerItem(${index})" style="background:none; border:none; color:red; cursor:pointer;">x</button>`;
+        listaUl.appendChild(li);
+    });
+}
+
+function removerItem(index) {
+    listaOrcamento.splice(index, 1);
+    atualizarListaUI();
+}
+
+// Simulação de envio
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (listaOrcamento.length === 0) {
+        alert("Sua lista está vazia! Escolha algum produto primeiro.");
+        return;
+    }
+
+    const dados = {
+        cliente: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        mensagem: document.getElementById('mensagem').value,
+        produtos: listaOrcamento
+    };
+
+    console.log("Enviando solicitação de orçamento:", dados);
+    alert(`Obrigado, ${dados.cliente}! Sua solicitação de orçamento para ${dados.produtos.length} itens foi enviada.`);
+    
+    // Resetar formulário e lista
+    listaOrcamento.length = 0;
+    atualizarListaUI();
+    form.reset();
+});
+
+    </script>
 </body>
 </html>
